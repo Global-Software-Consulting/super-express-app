@@ -3,7 +3,6 @@ const {
   validationResult,
   checkSchema,
   param,
-  query,
 } = require('express-validator');
 
 var statusCheck = {
@@ -39,7 +38,6 @@ const changeUserStatus = () => {
 };
 
 const validate = (req, res, next) => {
-  console.log('in validate function');
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     return next();

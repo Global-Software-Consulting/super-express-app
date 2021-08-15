@@ -4,8 +4,14 @@ const auth = require('../middleware/auth');
 const userController = require('../controllers/user');
 const { checkRole } = require('../middleware/roles');
 const fileUpload = require('../middleware/fileUpload');
+const { userValidator } = require('../validators');
 
-router.post('/signup', userController.signup);
+router.post(
+  '/signup',
+  userValidator.signUpValidator(),
+  userValidator.validate,
+  userController.signup
+);
 router.post('/login', userController.login);
 
 router.patch(

@@ -2,7 +2,6 @@ const multer = require('multer');
 const { clearFolder, checkDirectory } = require('../utils/directories');
 const fileFilter = (req, file, cb) => {
   if (req.type == 'image') {
-    console.log('in image multer');
     if (file.mimetype.startsWith('image')) {
       cb(null, true);
     } else {
@@ -24,8 +23,6 @@ const fileFilter = (req, file, cb) => {
   }
 
   if (req.type == 'pdf') {
-    console.log('in pdf multer');
-
     if (
       file.mimetype === 'application/pdf' ||
       file.mimetype ===
@@ -40,7 +37,6 @@ const fileFilter = (req, file, cb) => {
 };
 
 const fileUpload = (uploadPath) => {
-  console.log('------------------In upload');
   return multer({
     storage: multer.diskStorage({
       destination: (req, file, cb) => {

@@ -14,7 +14,6 @@ const checkRole =
       return apiResponse(res, 'error', 'You are not logged in', 401);
     }
     const isAllowed = roles.find((role) => req.user.role === role);
-    console.log('isAllowed', isAllowed);
     if (!isAllowed) {
       // return res
       //   .status(403)

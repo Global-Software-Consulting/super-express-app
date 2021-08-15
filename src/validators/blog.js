@@ -27,4 +27,4 @@ const validate = (req, res, next) => {
   });
 };
 
-export { validate, add, deleteBlog };
+module.exports = { validate, add, deleteBlog };

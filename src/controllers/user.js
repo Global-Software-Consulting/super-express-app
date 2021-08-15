@@ -19,7 +19,6 @@ function generateJWT(user, res) {
       { expiresIn: 360000 },
       (error, token) => {
         if (error) throw error;
-        //   console.log(token);
         return res.json({ token });
       }
     );
@@ -30,7 +29,6 @@ function generateJWT(user, res) {
 
 exports.signup = async (req, res) => {
   let { password, email } = req.body;
-  console.log('in signup');
   if (!password) {
     return apiResponse(res, 404, 'password is required');
   }
@@ -72,12 +70,10 @@ exports.login = async (req, res) => {
     if (!user) {
       return apiResponse(res, 404, 'No active user with this email');
     }
-    console.log(user.password);
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       return apiResponse(res, 404, 'incorrect password');
     }
-    console.log(user.email);
     generateJWT(user, res);
   } catch (error) {
     return apiResponse(res, 500, error.message);
@@ -125,7 +121,6 @@ exports.login = async (req, res) => {
 
 exports.getLoggedInUser = async (req, res) => {
   try {
-    console.log(req.user, 'request user');
     const user = await User.findOne({ where: { id: req.user.id } });
     return apiResponse(res, 200, 'Logged in user', user);
   } catch (err) {
@@ -160,7 +155,7 @@ exports.changeUserStatus = async (req, res) => {
   }
 };
 
-exports.updateProfilePic = async (req, res, next) => {
+exports.updateProfilePic = async (req, res) => {
   try {
     if (req.user.id == req.params.userId) {
       if (req.file) req.body.profilePicture = req.file.filename;

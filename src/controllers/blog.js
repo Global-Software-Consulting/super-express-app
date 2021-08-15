@@ -34,7 +34,6 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    console.log('req.user.role', req.user.role);
     const blog = await Blog.findOne({
       where: { id: req.params.id },
     });

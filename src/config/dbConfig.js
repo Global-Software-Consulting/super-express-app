@@ -6,7 +6,7 @@ if (dotenv) {
       password: dotenv.DB_PASSWORD,
       database: dotenv.DB_NAME,
       host: '127.0.0.1',
-      dialect: 'mysql',
+      dialect: 'postgres',
       // operatorsAliases: false,
     },
     test: {
@@ -14,7 +14,7 @@ if (dotenv) {
       password: dotenv.DB_PASSWORD,
       database: dotenv.DB_NAME,
       host: '127.0.0.1',
-      dialect: 'mysql',
+      dialect: 'postgres',
       // operatorsAliases: false,
     },
     production: {
@@ -22,7 +22,7 @@ if (dotenv) {
       password: dotenv.DB_PASSWORD,
       database: dotenv.DB_NAME,
       host: '127.0.0.1',
-      dialect: 'mysql',
+      dialect: 'postgres',
       // operatorsAliases: false,
     },
   };

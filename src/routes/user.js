@@ -27,7 +27,10 @@ router.patch(
 
   userController.updateProfilePic
 );
-router.get('/', auth, userController.getLoggedInUser);
+router.get('/me', auth, userController.me);
+router.get('/:id', auth, userController.user);
+router.get('/', auth, checkRole('admin'), userController.all);
+
 router.patch(
   '/updateStatus/:id',
   auth,

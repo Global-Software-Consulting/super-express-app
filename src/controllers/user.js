@@ -119,10 +119,32 @@ exports.login = async (req, res) => {
 //     });
 // };
 
-exports.getLoggedInUser = async (req, res) => {
+exports.me = async (req, res) => {
   try {
     const user = await User.findOne({ where: { id: req.user.id } });
     return apiResponse(res, 200, 'Logged in user', user);
+  } catch (err) {
+    return apiResponse(res, 500, err.message);
+  }
+};
+
+exports.user = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    if (!userId) {
+      return apiResponse(res, 400, 'user id missing');
+    }
+    const user = await User.findOne({ where: { id: userId } });
+    return apiResponse(res, 200, ' user', user);
+  } catch (err) {
+    return apiResponse(res, 500, err.message);
+  }
+};
+
+exports.all = async (req, res) => {
+  try {
+    const users = await User.findAll({});
+    return apiResponse(res, 200, ' user', users);
   } catch (err) {
     return apiResponse(res, 500, err.message);
   }
@@ -141,14 +163,9 @@ exports.changeUserStatus = async (req, res) => {
     if (user.status == 'blocked') {
       status = 'active';
     }
-    await User.update(
-      {
-        status,
-      },
-      {
-        where: { id: req.params.id },
-      }
-    );
+    await user.update({
+      status,
+    });
     return apiResponse(res, 200, `user account ${status} successfully`);
   } catch (err) {
     return apiResponse(res, 500, err.message);
@@ -162,25 +179,19 @@ exports.updateProfilePic = async (req, res) => {
       if (!req.body.profilePicture) {
         return apiResponse(res, 400, 'must select a picture');
       }
+      const user = await User.findByPk(req.user.id);
 
-      const user = await User.update(
-        {
-          profilePicture: req.body.profilePicture,
-        },
-        {
-          where: {
-            id: req.user.id,
-          },
-        }
-      );
-      if (user[0] == 0) {
+      if (!user) {
         return apiResponse(res, 'error', 'No user found with this id', 404);
       }
+      await user.update({
+        profilePicture: req.body.profilePicture,
+      });
       return apiResponse(
         res,
         200,
         'Profile picture updated successfully',
-        user[0]
+        user
       );
     } else {
       return apiResponse(

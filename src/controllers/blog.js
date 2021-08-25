@@ -23,9 +23,7 @@ exports.update = async (req, res) => {
     if (req.user.role !== 'admin' && blog.userId !== req.userId) {
       return apiResponse(res, 400, 'You have no access to edit this blog');
     }
-    const updatedBlog = await Blog.update(req.body, {
-      where: { id: req.params.id },
-    });
+    const updatedBlog = await blog.update(req.body);
     return apiResponse(res, 200, 'Updated successfully', updatedBlog);
   } catch (error) {
     return apiResponse(res, 500, error.message);

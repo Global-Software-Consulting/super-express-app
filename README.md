@@ -34,7 +34,7 @@ cp .env.example .env
 
 ## Features
 
-- **mysql database**: object data modeling using [sequelize](https://sequelize.org/)
+- **postgres database**: object data modeling using [sequelize](https://sequelize.org/)
 - **Authentication**: using [jwt](https://jwt.io/)
 - **Validation**: validation of fields enabled using [express-validator](https://express-validator.github.io/docs/check-api.html)
 - **API testing**: with postman

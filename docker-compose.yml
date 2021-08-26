@@ -1,6 +1,21 @@
-version: '3'
+version: '3.7'
 services:
-  database:
-    image: 'postgres'
-      env_file: - .env
-      volumes: - database-data:/var/lib/postgresql/data/
+  db:
+    image: postgres
+    ports: 
+      - "5432:5432"
+    volumes: 
+    environment:
+       POSTGRES_USER: "postgres"
+       POSTGRES_PASSWORD: "gsoft@123"
+       POSTGRES_DB: "pg_development"
+
+    logging:
+      options:
+        max-size: 10m
+        max-file: '3'
+    ports:
+      - '5438:5432'
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      # copy the sql script to create tables

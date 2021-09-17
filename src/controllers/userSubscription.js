@@ -39,7 +39,6 @@ exports.buy = async (req, res) => {
         stripeCustomerId: stripeCustomer.id,
         userId,
       });
-      console.log('stripeCustomer.id', stripeCustomer);
       stripeCustomerId = stripeCustomer.id;
     } else {
       stripeCustomerId = userSubscription.stripeCustomerId;

@@ -1,35 +1,35 @@
 const {
   body,
   validationResult,
-  checkSchema,
+  // checkSchema,
   param,
 } = require('express-validator');
 
-var statusCheck = {
-  status: {
-    isIn: {
-      options: [['active', 'blocked']],
-      errorMessage:
-        "Invalid status! status should be one of them ['active', 'blocked']",
-    },
-  },
-};
-var roleCheck = {
-  status: {
-    isIn: {
-      options: [['user', 'admin', 'editor']],
-      errorMessage:
-        "Invalid role! role should be one of them ['user', 'admin','editor']",
-    },
-  },
-};
+// var statusCheck = {
+//   status: {
+//     isIn: {
+//       options: [['active', 'blocked']],
+//       errorMessage:
+//         "Invalid status! status should be one of them ['active', 'blocked']",
+//     },
+//   },
+// };
+// var roleCheck = {
+//   status: {
+//     isIn: {
+//       options: [['user', 'admin', 'editor']],
+//       errorMessage:
+//         "Invalid role! role should be one of them ['user', 'admin','editor']",
+//     },
+//   },
+// };
 
 const signUpValidator = () => {
   return [
     body('name', 'Name is required').not().isEmpty(),
     body('email', 'email is required').not().isEmpty(),
-    checkSchema(statusCheck),
-    checkSchema(roleCheck),
+    // checkSchema(statusCheck),
+    // checkSchema(roleCheck),
   ];
 };
 

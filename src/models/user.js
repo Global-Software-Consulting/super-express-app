@@ -54,6 +54,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: { name: 'userId', allowNull: false },
       as: 'blogs',
     });
+    User.hasMany(models.UserSubscription, {
+      foreignKey: { name: 'userId', allowNull: false },
+      as: 'subscription',
+    });
   };
   User.beforeCreate(async (user) => {
     const encryptPassword = await bcrypt.hash(user.password, 12);

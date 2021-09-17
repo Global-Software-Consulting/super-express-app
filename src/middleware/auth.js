@@ -12,7 +12,7 @@ const loginAuth = async function (req, res, next) {
   }
   if (!token) {
     return res.status(401).json({
-      status: 'Error',
+      status: false,
       message: 'Your are not logged in',
     });
   }
@@ -24,7 +24,7 @@ const loginAuth = async function (req, res, next) {
     next();
   } catch (error) {
     return res.status(401).json({
-      status: 'Error',
+      status: false,
       message: 'Invalid token',
     });
   }

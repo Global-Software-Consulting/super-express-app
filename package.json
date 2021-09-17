@@ -37,7 +37,8 @@
     "path": "^0.12.7",
     "pg": "^8.7.1",
     "sequelize": "^6.6.5",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "stripe": "^8.176.0"
   },
   "devDependencies": {
     "eslint": "^7.32.0",

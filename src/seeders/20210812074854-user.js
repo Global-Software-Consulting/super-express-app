@@ -7,7 +7,6 @@ module.exports = {
     password = await bcrypt.hash(password, 12);
     let users = [
       {
-        id: 1,
         name: faker.name.findName(),
         firstName: faker.name.findName(),
         lastName: faker.name.findName(),
@@ -18,7 +17,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 2,
         name: faker.name.findName(),
         firstName: faker.name.findName(),
         lastName: faker.name.findName(),
@@ -29,7 +27,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 3,
         name: faker.name.findName(),
         firstName: faker.name.findName(),
         lastName: faker.name.findName(),
@@ -40,7 +37,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 4,
         name: faker.name.findName(),
         firstName: faker.name.findName(),
         lastName: faker.name.findName(),
@@ -51,7 +47,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 5,
         name: faker.name.findName(),
         firstName: faker.name.findName(),
         lastName: faker.name.findName(),
@@ -62,7 +57,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 6,
         name: faker.name.findName(),
         firstName: faker.name.findName(),
         lastName: faker.name.findName(),
@@ -73,7 +67,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 7,
         name: faker.name.findName(),
         firstName: faker.name.findName(),
         lastName: faker.name.findName(),

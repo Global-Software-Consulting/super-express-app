@@ -23,14 +23,14 @@ function generateJWT(user, res) {
       }
     );
   } catch (error) {
-    return apiResponse(res, 500, error.message);
+    return apiResponse(res, 500, false, error.message);
   }
 }
 
 exports.signup = async (req, res) => {
   let { password, email } = req.body;
   if (!password) {
-    return apiResponse(res, 404, 'password is required');
+    return apiResponse(res, 404, false, 'password is required');
   }
   try {
     if (email) {
@@ -39,15 +39,15 @@ exports.signup = async (req, res) => {
         where: { email: email },
       });
       if (alreadyUser) {
-        return apiResponse(res, 400, 'This email already exists');
+        return apiResponse(res, 400, false, 'This email already exists');
       }
     }
 
     let user = await User.create(req.body);
     user = JSON.parse(JSON.stringify(user));
-    return apiResponse(res, 201, 'Registered Successfully', user);
+    return apiResponse(res, 201, true, 'Registered Successfully', user);
   } catch (err) {
-    return apiResponse(res, 500, err.message);
+    return apiResponse(res, 500, false, err.message);
   }
 };
 
@@ -56,7 +56,7 @@ exports.login = async (req, res) => {
     let { email, password } = req.body;
     // Check if email and password exists...
     if (!email || !password) {
-      return apiResponse(res, 404, 'Password or email missing');
+      return apiResponse(res, 404, false, 'Password or email missing');
     }
 
     //Get User from database
@@ -72,11 +72,11 @@ exports.login = async (req, res) => {
     }
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      return apiResponse(res, 404, 'incorrect password');
+      return apiResponse(res, 404, false, 'incorrect password');
     }
     generateJWT(user, res);
   } catch (error) {
-    return apiResponse(res, 500, error.message);
+    return apiResponse(res, 500, false, error.message);
   }
 };
 
@@ -122,9 +122,9 @@ exports.login = async (req, res) => {
 exports.me = async (req, res) => {
   try {
     const user = await User.findOne({ where: { id: req.user.id } });
-    return apiResponse(res, 200, 'Logged in user', user);
+    return apiResponse(res, 200, true, 'Logged in user', user);
   } catch (err) {
-    return apiResponse(res, 500, err.message);
+    return apiResponse(res, 500, false, err.message);
   }
 };
 
@@ -132,32 +132,32 @@ exports.user = async (req, res) => {
   try {
     const userId = req.params.id;
     if (!userId) {
-      return apiResponse(res, 400, 'user id missing');
+      return apiResponse(res, 400, false, 'user id missing');
     }
     const user = await User.findOne({ where: { id: userId } });
-    return apiResponse(res, 200, ' user', user);
+    return apiResponse(res, 200, true, ' user', user);
   } catch (err) {
-    return apiResponse(res, 500, err.message);
+    return apiResponse(res, 500, false, err.message);
   }
 };
 
 exports.all = async (req, res) => {
   try {
     const users = await User.findAll({});
-    return apiResponse(res, 200, ' user', users);
+    return apiResponse(res, 200, true, ' user', users);
   } catch (err) {
-    return apiResponse(res, 500, err.message);
+    return apiResponse(res, 500, false, err.message);
   }
 };
 
 exports.changeUserStatus = async (req, res) => {
   try {
     if (!req.params.id) {
-      return apiResponse(res, 400, 'enter user id');
+      return apiResponse(res, 400, false, 'enter user id');
     }
     const user = await User.findOne({ where: { id: req.params.id } });
     if (!user) {
-      return apiResponse(res, 404, 'No user found with this id');
+      return apiResponse(res, 404, false, 'No user found with this id');
     }
     let status = 'blocked';
     if (user.status == 'blocked') {
@@ -166,9 +166,9 @@ exports.changeUserStatus = async (req, res) => {
     await user.update({
       status,
     });
-    return apiResponse(res, 200, `user account ${status} successfully`);
+    return apiResponse(res, 200, true, `user account ${status} successfully`);
   } catch (err) {
-    return apiResponse(res, 500, err.message);
+    return apiResponse(res, 500, false, err.message);
   }
 };
 
@@ -177,12 +177,12 @@ exports.updateProfilePic = async (req, res) => {
     if (req.user.id == req.params.userId) {
       if (req.file) req.body.profilePicture = req.file.filename;
       if (!req.body.profilePicture) {
-        return apiResponse(res, 400, 'must select a picture');
+        return apiResponse(res, 400, false, 'must select a picture');
       }
       const user = await User.findByPk(req.user.id);
 
       if (!user) {
-        return apiResponse(res, 'error', 'No user found with this id', 404);
+        return apiResponse(res, 404, false, 'No user found with this id');
       }
       await user.update({
         profilePicture: req.body.profilePicture,
@@ -190,6 +190,7 @@ exports.updateProfilePic = async (req, res) => {
       return apiResponse(
         res,
         200,
+        true,
         'Profile picture updated successfully',
         user
       );
@@ -197,10 +198,11 @@ exports.updateProfilePic = async (req, res) => {
       return apiResponse(
         res,
         401,
+        false,
         'You are not authorize to perform this action'
       );
     }
   } catch (error) {
-    return apiResponse(res, 500, error.message);
+    return apiResponse(res, 500, false, error.message);
   }
 };

@@ -3,7 +3,6 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     let users = [
       {
-        id: 1,
         content: 'content',
         heading: 'heading',
         abstract: 'abstract',
@@ -12,7 +11,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 2,
         content: 'content',
         heading: 'heading',
         abstract: 'abstract',
@@ -21,7 +19,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 3,
         content: 'content',
         heading: 'heading',
         abstract: 'abstract',
@@ -30,7 +27,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 4,
         content: 'content',
         heading: 'heading',
         abstract: 'abstract',

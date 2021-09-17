@@ -6,9 +6,9 @@ exports.add = async (req, res) => {
   try {
     req.body.userId = req.user.id;
     const blog = await Blog.create(req.body);
-    return apiResponse(res, 201, 'Blog published successfully', blog);
+    return apiResponse(res, 201, true, 'Blog published successfully', blog);
   } catch (error) {
-    return apiResponse(res, 500, error.message);
+    return apiResponse(res, 500, false, error.message);
   }
 };
 
@@ -18,15 +18,20 @@ exports.update = async (req, res) => {
       where: { id: req.params.id },
     });
     if (!blog) {
-      return apiResponse(res, 404, 'No blog found');
+      return apiResponse(res, 404, false, 'No blog found');
     }
     if (req.user.role !== 'admin' && blog.userId !== req.userId) {
-      return apiResponse(res, 400, 'You have no access to edit this blog');
+      return apiResponse(
+        res,
+        400,
+        false,
+        'You have no access to edit this blog'
+      );
     }
     const updatedBlog = await blog.update(req.body);
-    return apiResponse(res, 200, 'Updated successfully', updatedBlog);
+    return apiResponse(res, 200, true, 'Updated successfully', updatedBlog);
   } catch (error) {
-    return apiResponse(res, 500, error.message);
+    return apiResponse(res, 500, false, error.message);
   }
 };
 
@@ -36,18 +41,23 @@ exports.delete = async (req, res) => {
       where: { id: req.params.id },
     });
     if (!blog) {
-      return apiResponse(res, 404, 'No blog found with this id');
+      return apiResponse(res, 404, false, 'No blog found with this id');
     }
     if (req.user.role !== 'admin' && req.user.id !== blog.userId) {
-      return apiResponse(res, 400, 'You have not access to delete this blog');
+      return apiResponse(
+        res,
+        400,
+        false,
+        'You have not access to delete this blog'
+      );
     }
     await Blog.destroy({
       where: { id: req.params.id },
       force: true,
     });
-    return apiResponse(res, 200, 'Deleted successfully');
+    return apiResponse(res, 200, true, 'Deleted successfully');
   } catch (error) {
-    return apiResponse(res, 500, error.message);
+    return apiResponse(res, 500, false, error.message);
   }
 };
 
@@ -63,25 +73,25 @@ exports.getById = async (req, res) => {
       ],
     });
     if (!blog) {
-      return apiResponse(res, 404, 'No blog found with this id');
+      return apiResponse(res, 404, false, 'No blog found with this id');
     }
-    return apiResponse(res, 200, 'Data', blog);
+    return apiResponse(res, 200, true, 'Data', blog);
   } catch (error) {
-    return apiResponse(res, 500, error.message);
+    return apiResponse(res, 500, false, error.message);
   }
 };
 
 exports.editorBlogs = async (req, res) => {
   try {
     if (!req.params.id) {
-      return apiResponse(res, 400, 'creator id required');
+      return apiResponse(res, 400, false, 'creator id required');
     }
     const blogs = await Blog.findAll({
       where: { userId: req.params.id },
     });
-    return apiResponse(res, 200, 'Data', blogs);
+    return apiResponse(res, 200, true, 'Data', blogs);
   } catch (error) {
-    return apiResponse(res, 500, error.message);
+    return apiResponse(res, 500, false, error.message);
   }
 };
 
@@ -110,11 +120,11 @@ exports.getAll = async (req, res) => {
     //     },
     //   ],
     // });
-    return apiResponse(res, 200, `${blogs.length} blogs found`, {
+    return apiResponse(res, 200, true, `${blogs.length} blogs found`, {
       count: blogsCount,
       blogs,
     });
   } catch (error) {
-    return apiResponse(res, 500, error.message);
+    return apiResponse(res, 500, false, error.message);
   }
 };

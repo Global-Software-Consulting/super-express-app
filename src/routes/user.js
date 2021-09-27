@@ -38,4 +38,12 @@ router.patch(
   userController.changeUserStatus
 );
 
+// router.get(
+//   '/facebook/callback',
+//   passport.authenticate('facebook', {
+//     successRedirect: '/',
+//     failureRedirect: '/',
+//     session: false,
+//   })
+// );
 module.exports = router;

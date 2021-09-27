@@ -44,6 +44,12 @@ module.exports = (sequelize, DataTypes) => {
       provider: {
         type: DataTypes.STRING,
       },
+      facebookId: {
+        type: DataTypes.STRING,
+      },
+      googleId: {
+        type: DataTypes.STRING,
+      },
     },
     {
       timestamps: true,

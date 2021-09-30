@@ -1,4 +1,4 @@
-# RESTful API Node Server
+# RESTful API using Nodejs, Express with relational database Postgres, MySQL
 
 ## Installation
 

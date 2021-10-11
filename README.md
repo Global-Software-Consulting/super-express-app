@@ -27,6 +27,7 @@ cp .env.example .env
 - [Commands](#commands)
 - [Environment Variables](#environment-variables)
 - [Project Structure](#project-structure)
+- [Stripe Integration](#stripe-integration)
 - [Authentication](#authentication)
 - [Validation](#validation)
 - [Roles](#roles)
@@ -131,6 +132,24 @@ test\
  
 ```
 
+## Stripe Integration
+Create subscription Plans by admin
+```
+   "name":"basic",
+    "monthlyPrice":5,
+    "annualPrice":55
+```
+User can buy subscription monthly or yearly
+```
+  "interval": "monthly",
+  "subscriptionPlanId": selected subscription plan id
+```
+Add payment card
+```
+    "number":payment card number,
+    "exp_month":expiry month,
+    "exp_year":expiry year
+```
 ### API Endpoints
 
 List of available routes:

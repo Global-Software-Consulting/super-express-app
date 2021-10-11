@@ -1,13 +1,11 @@
-const dotenv = require('dotenv').config().parsed;
-if (dotenv) {
-  module.exports = {
-    port: dotenv.PORT,
-    jwtSecret: dotenv.JWT_SECRET,
-    emailSendFrom: dotenv.MAIL_SEND_FROM,
-    mailSendPassword: dotenv.MAIL_SEND_PASSWORD,
-    mailSendUsername: dotenv.MAIL_SEND_USERNAME,
-    resetTokenKey: dotenv.RESET_TOKEN_KEY,
-  };
-} else {
-  throw new Error('.env file is missing');
-}
+/*eslint-disable */
+const dotenv = require('dotenv');
+dotenv.config();
+module.exports = {
+  port: process.env.PORT,
+  jwtSecret: process.env.JWT_SECRET,
+  emailSendFrom: process.env.MAIL_SEND_FROM,
+  mailSendPassword: process.env.MAIL_SEND_PASSWORD,
+  mailSendUsername: process.env.MAIL_SEND_USERNAME,
+  resetTokenKey: process.env.RESET_TOKEN_KEY,
+};

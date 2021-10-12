@@ -32,6 +32,7 @@ cp .env.example .env
 - [Validation](#validation)
 - [Roles](#roles)
 - [Linting](#linting)
+- [Heroku](#heroku)
 
 ## Features
 
@@ -210,3 +211,6 @@ router.post('/', auth, checkRole('admin', 'editor'), blogController.add);
 ## Linting
 
 Linting is done using [ESLint](https://eslint.org/) and [Prettier](https://prettier.io).
+
+## Heroku
+Deployed on heroku here is live heroku link [SuperApp](https://super-express-app.herokuapp.com/api/v1)

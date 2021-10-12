@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { User } = require('../models');
+const { User, UserSubscription, Blog } = require('../models');
 const jwt = require('jsonwebtoken');
 const { config } = require('../config');
 const apiResponse = require('../utils/apiResponse');
@@ -121,7 +121,14 @@ exports.login = async (req, res) => {
 
 exports.me = async (req, res) => {
   try {
-    const user = await User.findOne({ where: { id: req.user.id } });
+    console.log('-======================================');
+    const user = await User.findOne({
+      where: { id: req.user.id },
+      include: [
+        { model: UserSubscription, as: 'subscription' },
+        { model: Blog, as: 'blogs' },
+      ],
+    });
     return apiResponse(res, 200, true, 'Logged in user', user);
   } catch (err) {
     return apiResponse(res, 500, false, err.message);

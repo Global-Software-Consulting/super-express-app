@@ -4,16 +4,16 @@ const { config } = require('../config');
 const sendMail = async (mailOptions) => {
   let sendMailOptions = {
     ...mailOptions,
-    from: config.MAIL_SEND_FROM,
-    sender: config.MAIL_SEND_FROM,
+    from: config.emailSendFrom,
+    sender: config.emailSendFrom,
   };
 
   var transport = nodemailer.createTransport({
     host: 'smtp.mailtrap.io',
     port: 2525,
     auth: {
-      user: config.MAIL_SEND_USERNAME,
-      pass: config.MAIL_SEND_PASSWORD,
+      user: config.mailSendUsername,
+      pass: config.mailSendPassword,
     },
   });
   try {
